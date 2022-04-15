@@ -1,34 +1,38 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { get } from '../utils/httpClient'
 import {MovieCard} from './MovieCard'
-//import movies from './movies.json'
+
 import styles from "./MoviesGrid.module.css"
 import { Spinner } from './Spinner'
+//import InfiniteScroll from "react-infinite-scroll-component";
+//import { Empty } from "./Empty";
 
 
-export function MoviesGrid () {
+export function MoviesGrid ( {search}) {
 
     //let movies= []
        //const movies =  moviesState[0]
     //const setMovies = moviesState[1]
     //const [movies, setMovies] = moviesState
-    const [movies, setMovies] = useState([])
-
- const [isLoading, setisLoading] = useState(true);
+    const [movies, setMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     
 
     useEffect(()=>{
 
-        setisLoading(true)
-       get("/discover/movie").then( (data) =>{
+        setIsLoading(true)
+        const searchUrl = search ? "/search/movie?query=" + search : "/discover/movie";
+       get(searchUrl).then( (data) =>{
               setMovies(data.results)  
             //movies = data.results
                 //console.log(movies)
-                setisLoading(false)
+                setIsLoading(false)
             })   
-
-        }, [] )
+        }, [search] )
 
         if(isLoading){
             return <Spinner />
