@@ -20,8 +20,9 @@ function App() {
     <main>
       <Routes>
           <Route path="/movies/:movieId" element={ <MovieDetails /> } />
-          <Route path="/" element={ <LandingPage />} />    
-          <Route path="*" element={ <Navigate replace to="/" />  } />          
+          <Route path="/" element={ <LandingPage />} />
+          <Route path="*" element={ <Navigate replace to="/" />  } /> 
+
           
       </Routes>
     </main>
